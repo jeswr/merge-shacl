@@ -50,7 +50,7 @@
     "preset": "ts-jest",
     "collectCoverage": true,
     "coverageReporters": [
-      "json-summary", 
+      "json-summary",
       "text",
       "lcov"
     ],
@@ -72,5 +72,10 @@
     "branches": [
       "main"
     ]
+  },
+  "dependencies": {
+    "rambda": "^6.5.3",
+    "rdf-object": "^1.8.0",
+    "rdf-object-proxy": "^1.0.0-beta.1"
   }
 }
