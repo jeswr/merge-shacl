@@ -29,10 +29,9 @@ function severityFactory(strengthen: boolean): (l: Severity, r: Severity) => Sev
   )];
 }
 // TODO FIX TYPINGS BELOW
-// TODO: Fix typings
-function getFunctionMappings<T>(strengthen: boolean): Record<constraintType, Function> {
+function getFunctionMappings(strengthen: boolean): Record<constraintType, Function> {
   return {
-    [constraintType.LowerBound]: strengthen ? Math.max : Math.min,
+    [constraintType.LowerBound]: (l: number, r: number) => (strengthen ? Math.max : Math.min)(l, r),
     [constraintType.UpperBound]: strengthen ? Math.min : Math.max,
     [constraintType.ListUnion]: strengthen ? R.union : R.intersection,
     [constraintType.ListIntersection]: strengthen ? R.intersection : R.union,
