@@ -20,7 +20,7 @@ const severityOrder: Severity[] = [
   sh.Warning,
   sh.Violation,
 ];
-
+// TODO: Implement similar custom function for nodeKind
 function severityFactory(strengthen: boolean): (l: Severity, r: Severity) => Severity {
   const modifier = strengthen ? Math.max : Math.min;
   return (l: Severity, r: Severity) => severityOrder[modifier(
@@ -37,7 +37,7 @@ function getFunctionMappings(strengthen: boolean): Record<constraintType, Functi
     [constraintType.ListIntersection]: strengthen ? R.intersection : R.union,
     [constraintType.BooleanOr]: strengthen ? R.or : R.and,
     [constraintType.BooleanAnd]: strengthen ? R.and : R.or,
-    [constraintType.StringJoin]: (l: string, r: string) => `${l} & ${r}`,
+    [constraintType.StringJoin]: (l: string, r: string) => (l === r ? l : `${l} & ${r}`),
     [constraintType.SeverityHandler]: severityFactory(strengthen),
   };
 }
@@ -74,7 +74,9 @@ const classMappings: {
   [sh.closed]: constraintType.BooleanOr,
   [sh.deactivated]: constraintType.BooleanAnd,
   [sh.message]: constraintType.StringJoin,
-  // [sh.severity]
+  [sh.severity]: constraintType.SeverityHandler,
+  [sh.name]: constraintType.StringJoin,
+  [sh.order]: constraintType.UpperBound,
 };
 
 /**
