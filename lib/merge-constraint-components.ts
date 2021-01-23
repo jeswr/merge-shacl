@@ -28,7 +28,7 @@ function severityFactory(strengthen: boolean): (l: Severity, r: Severity) => Sev
     severityOrder.indexOf(r),
   )];
 }
-
+// TODO FIX TYPINGS BELOW
 // TODO: Fix typings
 function getFunctionMappings<T>(strengthen: boolean): Record<constraintType, Function> {
   return {
