@@ -7,5 +7,5 @@ export const enum ConstraintType {
   BooleanOr,
   BooleanAnd,
   StringJoin,
-  SeverityHandler
+  // SeverityHandler
 }

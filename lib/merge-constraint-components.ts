@@ -17,6 +17,7 @@ export function severityFactory(strengthen: boolean): (l: Severity, r: Severity)
     severityOrder.indexOf(r),
   )];
 }
+
 /**
  * Merges the constraint components inside a single
  * property shape.

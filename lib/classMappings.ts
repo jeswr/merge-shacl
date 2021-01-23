@@ -17,7 +17,7 @@ export const classMappings: {
   [sh.languageIn]: ConstraintType.ListIntersection,
   [sh._class]: ConstraintType.ListIntersection,
   [sh.datatype]: ConstraintType.ListIntersection,
-  [sh.NodeKind]: ConstraintType.ListIntersection,
+  // [sh.NodeKind]: ConstraintType.ListIntersection,
   [sh.lessThan]: ConstraintType.ListUnion,
   [sh.lessThanOrEquals]: ConstraintType.ListUnion,
   [sh.equals]: ConstraintType.ListUnion,
@@ -33,7 +33,6 @@ export const classMappings: {
   [sh.closed]: ConstraintType.BooleanOr,
   [sh.deactivated]: ConstraintType.BooleanAnd,
   [sh.message]: ConstraintType.StringJoin,
-  [sh.severity]: ConstraintType.SeverityHandler,
   [sh.name]: ConstraintType.StringJoin,
   [sh.order]: ConstraintType.UpperBound,
 };
