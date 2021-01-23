@@ -1,4 +1,5 @@
 import * as R from 'rambda';
+import { type } from 'rambda';
 import { ns as sh } from '../peer-deps/shacl';
 import { NodeKindType } from '../types';
 
@@ -15,6 +16,9 @@ export function nodeKindFactory(strengthen: boolean) {
   const comparator = strengthen ? R.intersection : R.union;
   return function mergeNodeKind(l: NodeKindType, r: NodeKindType): NodeKindType | undefined {
     const result = R.sortBy((x: NodeKindType) => x, comparator(nodeKindMap[l], nodeKindMap[r]));
+    if (!nodeKindMap[l] || !nodeKindMap[r]) {
+      throw new Error(`Expected two nodekinds but recieved ${l} and ${r}`);
+    }
     switch (result.length) {
       case 0:
         throw new Error(`No overlap between ${l} and ${r} so this constraint is always false`);

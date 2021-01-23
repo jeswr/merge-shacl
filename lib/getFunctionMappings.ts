@@ -13,16 +13,30 @@ type MergerFunc =
   | Merger<string>
   | Merger<NodeKindType>
 
+function assertType<T>(type: string, f: (l: T, r: T) => T) {
+  return (l: T, r: T) => {
+    if (type === 'array') {
+      if (!Array.isArray(l) || !Array.isArray(r)) {
+        throw new Error(`Type ${type} expected for both inputs, but got ${typeof l} and ${typeof r}`);
+      }
+    } else if (typeof l !== 'number' || typeof r !== 'number') {
+      throw new Error(`Type ${type} expected for both inputs, but got ${typeof l} and ${typeof r}`);
+    }
+    return f(l, r);
+  };
+}
+
 function getFunctionMappings(strengthen: boolean):
   Record<ConstraintType, MergerFunc> {
   return {
-    [ConstraintType.LowerBound]: (l: number, r: number) => (strengthen ? Math.max : Math.min)(l, r),
-    [ConstraintType.UpperBound]: strengthen ? Math.min : Math.max,
-    [ConstraintType.ListUnion]: strengthen ? R.union : R.intersection,
-    [ConstraintType.ListIntersection]: strengthen ? R.intersection : R.union,
-    [ConstraintType.BooleanOr]: strengthen ? R.or : R.and,
-    [ConstraintType.BooleanAnd]: strengthen ? R.and : R.or,
-    [ConstraintType.StringJoin]: (l: string, r: string) => (l === r ? l : `${l} & ${r}`),
+    [ConstraintType.LowerBound]: assertType('number', strengthen ? Math.max : Math.min),
+    [ConstraintType.UpperBound]: assertType('number', strengthen ? Math.min : Math.max),
+    [ConstraintType.ListUnion]: assertType('array', strengthen ? R.union : R.intersection),
+    [ConstraintType.ListIntersection]: assertType('array', strengthen ? R.intersection : R.union),
+    [ConstraintType.BooleanOr]: assertType<boolean>('boolean', strengthen ? R.or : R.and),
+    [ConstraintType.BooleanAnd]: assertType<boolean>('boolean', strengthen ? R.and : R.or),
+    [ConstraintType.StringJoin]: assertType('string',
+      (l: string, r: string) => (l === r ? l : `${l} & ${r}`)),
     // [ConstraintType.SeverityHandler]: severityFactory(strengthen),
     // [ConstraintType.Nodekind]: severityFactory(strengthen),
   };
