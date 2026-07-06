@@ -13,20 +13,21 @@ type MergerFunc =
   | Merger<string>
   | Merger<NodeKindType>
 
-function assertType<T>(type: string, f: (l: T, r: T) => T) {
+function assertType<T>(type: 'array' | 'number' | 'boolean' | 'string', f: (l: T, r: T) => T) {
   return (l: T, r: T) => {
     if (type === 'array') {
       if (!Array.isArray(l) || !Array.isArray(r)) {
         throw new Error(`Type ${type} expected for both inputs, but got ${typeof l} and ${typeof r}`);
       }
-    } else if (typeof l !== 'number' || typeof r !== 'number') {
+    // eslint-disable-next-line valid-typeof
+    } else if (typeof l !== type || typeof r !== type) {
       throw new Error(`Type ${type} expected for both inputs, but got ${typeof l} and ${typeof r}`);
     }
     return f(l, r);
   };
 }
 
-function getFunctionMappings(strengthen: boolean):
+export function getFunctionMappings(strengthen: boolean):
   Record<ConstraintType, MergerFunc> {
   return {
     [ConstraintType.LowerBound]: assertType('number', strengthen ? Math.max : Math.min),
@@ -42,7 +43,7 @@ function getFunctionMappings(strengthen: boolean):
   };
 }
 
-function getCustomMappings(strengthen: boolean): {
+export function getCustomMappings(strengthen: boolean): {
   [key in sh]?: MergerFunc;
 } {
   return {
