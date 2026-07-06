@@ -10,7 +10,7 @@ export const classMappings: {
   [sh.minCount]: ConstraintType.LowerBound,
   [sh.qualifiedMinCount]: ConstraintType.LowerBound,
   [sh.maxCount]: ConstraintType.UpperBound,
-  [sh.qualifiedMinCount]: ConstraintType.UpperBound,
+  [sh.qualifiedMaxCount]: ConstraintType.UpperBound,
   [sh.maxLength]: ConstraintType.UpperBound,
   [sh.maxExclusive]: ConstraintType.UpperBound,
   [sh.maxInclusive]: ConstraintType.UpperBound,
