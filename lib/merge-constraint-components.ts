@@ -27,7 +27,5 @@ export default function mergeConstraintComponents(
   properties: ProxiedResource<string>[],
   strengthen: boolean = true,
 ) {
-  if (sh._in in classMappings) {
-    return true;
-  }
+  return sh._in in classMappings;
 }
