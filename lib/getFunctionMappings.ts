@@ -8,8 +8,7 @@ type MergerFunc =
   | Merger<SeverityType>
   | Merger<number>
   | Merger<boolean>
-  // TODO FIX TYPINGS BELOW
-  | Merger<readonly any[]>
+  | Merger<readonly unknown[]>
   | Merger<string>
   | Merger<NodeKindType>
 
