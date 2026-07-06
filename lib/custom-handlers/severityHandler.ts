@@ -18,7 +18,7 @@ export function severityFactory(strengthen: boolean):
   const modifier = strengthen ? Math.max : Math.min;
   return (l: SeverityType, r: SeverityType) => {
     if (!severityMap[l] || !severityMap[r]) {
-      throw new Error(`Expected two severities but recieved ${l} and ${r}`);
+      throw new Error(`Expected two severities but received ${l} and ${r}`);
     }
     return severityOrder[modifier(
       severityOrder.indexOf(l),
